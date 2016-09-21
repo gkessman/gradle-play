@@ -1,8 +1,9 @@
 plugins {
     id 'play'
     id 'idea'
+    id 'com.craigburke.client-dependencies' version '1.2.0'
+    id 'org.ajoberstar.grgit' version '1.6.0-rc.1'
 }
-
 
 repositories {
     jcenter()
@@ -29,6 +30,37 @@ model {
             platform play: '2.3.9', scala: '2.10', java: '1.8'
         }
     }
+}
+
+import org.ajoberstar.grgit.*;
+
+task getConfigs {
+    def destination = file("conf/config")
+    if (destination.exists()) {
+        def configRepo = Grgit.open(dir: destination)
+        configRepo.pull()
+    } else {
+        Grgit.clone(dir: destination, uri: 'https://github.com/gkessman/esTail.git')
+    }
+}
+
+// NPM Dependencies are included here
+clientDependencies {
+    bower {
+        'jquery'('2.0.0')
+    }
+    npm {
+        'bootstrap'('3.3.7', exclude: 'jquery')
+        'angular2'('2.0.0-beta.17')
+    }
+    installDir = 'public/assets/vendor'
+}
+
+// Run this first on fresh project clone to pull dependencies and application configs
+task init {
+    dependsOn 'getConfigs'
+    dependsOn 'clientInstall'
+    tasks['clientInstall'].mustRunAfter 'getConfigs'
 }
 
 idea.module {

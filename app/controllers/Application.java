@@ -11,6 +11,7 @@ public class Application extends Controller {
 
     public Result index() {
 
+        System.out.println("Hello World");
         return ok(index.render());
     }
 

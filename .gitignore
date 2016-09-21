@@ -1,9 +1,14 @@
 logs
 target
-/.idea
+/.idea/copyright
+/.idea/modules
+/.idea/*.xml
+/.gradle
 /.idea_modules
 /.classpath
 /.project
 /.settings
 /build
+/conf/config
+/public/assets
 /RUNNING_PID
