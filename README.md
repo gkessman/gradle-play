@@ -8,7 +8,6 @@ Gradle tasks to get started:
 
 `gradle -t runPlayBinary` - will start up Play application
 
-\
 Optional/Manual:
 
 `gradle getConfigs` - will manually clone/pull project specific config files (this is baked into `init` task)
